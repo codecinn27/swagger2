@@ -4,6 +4,7 @@ const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require('swagger-jsdoc');
+const loginRouter  = require('./routes/login');
 
 //must be on top, before all route
 app.use(express.json());
@@ -23,8 +24,10 @@ app.get('/', (req, res) => {
 app.get('/haha', (req, res) => {
     res.send('hahahahahahahahahahahaahahahaha')
   })
-  
-  const options = {
+
+app.use('/login', loginRouter);
+
+const options = {
     definition:{
         openapi: "3.0.3",
         info:{
@@ -62,7 +65,7 @@ app.get('/haha', (req, res) => {
         ],
     },
     //all the route.js file store inside the route file 
-    apis:["./index.js"],
+    apis:["./routes/*.js"],
 };
 
 const spacs = swaggerJSDoc(options);
