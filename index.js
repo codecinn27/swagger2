@@ -4,6 +4,7 @@ const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require('swagger-jsdoc');
+const loginController = require('./controllers/login');
 
 //must be on top, before all route
 app.use(express.json());
@@ -218,12 +219,10 @@ app.use("/g6", swaggerUi.serve, swaggerUi.setup(spacs));
 *                      type: string
 *                      description: Error message
 *                      example: Internal Server Error
-*          
-* 
-*      
+*              
 */
 
-
+app.post('/login', loginController.login);
 
 
 // must be placed below after all route
