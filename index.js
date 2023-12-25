@@ -224,8 +224,6 @@ app.use("/g6", swaggerUi.serve, swaggerUi.setup(spacs));
 *              
 */
 
-app.post('/login');
-
 // must be placed below after all route
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
