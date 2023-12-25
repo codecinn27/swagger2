@@ -5,8 +5,6 @@ const mongoose = require('mongoose');
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require('swagger-jsdoc');
 const {User} = require('./model/user');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
 //must be on top, before all route
 app.use(express.json());
@@ -160,69 +158,6 @@ app.use("/g6", swaggerUi.serve, swaggerUi.setup(spacs));
 *                 visitTime: '2023-01-01T12:00:00Z'
 */
 
-/**
-* @swagger
-* /login:
-*  post:
-*    tags: 
-*        - Login
-*    summary: Login for admin or host
-*    description: Once login authenticate a user and generate a JWT token 
-*    requestBody:
-*       required: true
-*       content: 
-*          application/json:
-*              schema:
-*                  type: object
-*                  properties:
-*                      username:
-*                          type: string
-*                      password:
-*                          type: string
-*    responses:
-*      200:   
-*          description: Successful login
-*          schema: 
-*              type: object    
-*              properties:
-*                  token: 
-*                      type: string
-*                      description: JWT token for authentication
-*                  category: 
-*                      type: string
-*                      description: User category (host or admin)
-*                  redirectLink:
-*                      type: string
-*                      description: Redirect link based on user category
-*                  GET:
-*                      type: string
-*                      description: URL to be used for redirection
-*                  Authorization:
-*                      type: string
-*                      description: JWT token for authorization
-*                  Content-Type: 
-*                      type: string
-*                      description: Response content type
-*      401:
-*          description: Invalid credentials
-*          schema: 
-*              type: object
-*              properties:
-*                  error:  
-*                      type: string
-*                      description: Error message
-*                      example: Invalid credentials
-*      500: 
-*          description: Internal Server Error
-*          schema: 
-*              type: object
-*              properties: 
-*                  error:
-*                      type: string
-*                      description: Error message
-*                      example: Internal Server Error
-*              
-*/
 
 // must be placed below after all route
 app.listen(port, () => {
