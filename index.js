@@ -4,7 +4,6 @@ const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require('swagger-jsdoc');
-const loginController = require('./controllers/login');
 const {User} = require('./model/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -213,7 +212,7 @@ app.use("/g6", swaggerUi.serve, swaggerUi.setup(spacs));
 *                      type: string
 *                      description: Error message
 *                      example: Invalid credentials
- *      500: 
+*      500: 
 *          description: Internal Server Error
 *          schema: 
 *              type: object
@@ -225,62 +224,9 @@ app.use("/g6", swaggerUi.serve, swaggerUi.setup(spacs));
 *              
 */
 
-app.post('/login',async(req, res) =>{
-    try {
-      // Implement your login logic (e.g., validate credentials against the database)
-      const { username, password } = req.body;
-      const user = await User.findOne({username});
-  
-      if (!user) {
-        return res.status(401).json({ error: 'Invalid credentials' });
-      }
-  
-      // Compare the provided password with the hashed password using bcrypt
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-  
-      if (!isPasswordValid) {
-          return res.status(401).json({ error: 'Invalid credentials' });
-      }
-  
-      // Generate a JWT token
-      const token = jwt.sign({ userId: user._id, category: user.category }, 'vms2', {
-        expiresIn: '1h',
-      });
-  
-      // Check the user's category and generate the appropriate link
-      let redirectLink;
-      if (user.category === 'host') {
-          redirectLink = `/host/${user._id}`;
-      } else if (user.category === 'admin') {
-          redirectLink = `/admin`;
-      }
-  
-  
-      console.log("JWT:",token);
-      res.json({
-          token,
-          category: user.category,
-          redirectLink,
-          "GET": `http://localhost:3000${redirectLink}`,
-          Authorization: token,
-          "Content-Type": "application/json",
-        });
-        
-        
-    } catch (error) {
-      console.error('Error during login:', error);
-        // Log additional information about the error
-      console.error('Error Stack:', error.stack);
-      // Handle different types of errors
-      if (error.name === 'ValidationError') {
-        return res.status(400).json({ error: 'Invalid input data' });
-      } else {
-        return res.status(500).json({ error: 'Internal Server Error' });
-      }
-    }
-});
+app.post('/login');
 
 // must be placed below after all route
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-})
+});
