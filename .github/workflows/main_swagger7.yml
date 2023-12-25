@@ -59,4 +59,4 @@ jobs:
           app-name: 'swagger7'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7BFA9544079545238503D284507D56B2 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ADC5988D43B4415D901654F1C58535C8 }}
